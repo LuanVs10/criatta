@@ -88,6 +88,8 @@ O site terá catálogo de produtos, carrinho, checkout com Pix e cartão, cálcu
 | Sprint 4 | Checkout, frete e pagamento |
 | Sprint 5 | Painel admin |
 | Sprint 6 | Notificações, testes e deploy final |
+| Sprint 7 | Segurança, performance e testes |
+
 
 **Estimativa:** ~118h de desenvolvimento  
 **Data de conclusão:** a definir

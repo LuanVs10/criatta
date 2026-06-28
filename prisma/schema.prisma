@@ -1,0 +1,140 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+// ─── ADMIN ───────────────────────────────────────────────
+model Admin {
+  id       Int    @id @default(autoincrement())
+  nome     String
+  email    String @unique
+  senha    String
+  criadoEm DateTime @default(now())
+}
+
+// ─── USUARIO (cliente) ───────────────────────────────────
+model Usuario {
+  id       Int      @id @default(autoincrement())
+  nome     String
+  email    String   @unique
+  senha    String
+  telefone String?
+  criadoEm DateTime @default(now())
+
+  enderecos Endereco[]
+  pedidos   Pedido[]
+}
+
+// ─── ENDERECO ────────────────────────────────────────────
+model Endereco {
+  id          Int    @id @default(autoincrement())
+  usuarioId   Int
+  cep         String
+  rua         String
+  numero      String
+  complemento String?
+  bairro      String
+  cidade      String
+  estado      String
+
+  usuario Usuario  @relation(fields: [usuarioId], references: [id])
+  pedidos Pedido[]
+}
+
+// ─── CATEGORIA ───────────────────────────────────────────
+model Categoria {
+  id       Int       @id @default(autoincrement())
+  nome     String    @unique
+  produtos Produto[]
+}
+
+// ─── PRODUTO ─────────────────────────────────────────────
+model Produto {
+  id          Int      @id @default(autoincrement())
+  nome        String
+  descricao   String   @db.Text
+  preco       Decimal  @db.Decimal(10, 2)
+  prazo       String
+  ativo       Boolean  @default(true)
+  categoriaId Int
+  criadoEm   DateTime  @default(now())
+  atualizadoEm DateTime @updatedAt
+
+  categoria   Categoria    @relation(fields: [categoriaId], references: [id])
+  fotos       FotoProduto[]
+  itensPedido ItemPedido[]
+}
+
+// ─── FOTO PRODUTO ─────────────────────────────────────────
+model FotoProduto {
+  id        Int    @id @default(autoincrement())
+  produtoId Int
+  url       String
+  ordem     Int    @default(0)
+
+  produto Produto @relation(fields: [produtoId], references: [id])
+}
+
+// ─── PEDIDO ──────────────────────────────────────────────
+model Pedido {
+  id            Int      @id @default(autoincrement())
+  usuarioId     Int
+  enderecoId    Int
+  status        String   @default("aguardando")
+  tipoEntrega   String
+  valorFrete    Decimal  @db.Decimal(10, 2)
+  valorTotal    Decimal  @db.Decimal(10, 2)
+  criadoEm      DateTime @default(now())
+  atualizadoEm  DateTime @updatedAt
+
+  usuario    Usuario      @relation(fields: [usuarioId], references: [id])
+  endereco   Endereco     @relation(fields: [enderecoId], references: [id])
+  itens      ItemPedido[]
+  pagamento  Pagamento?
+}
+
+// ─── ITEM PEDIDO ─────────────────────────────────────────
+model ItemPedido {
+  id           Int     @id @default(autoincrement())
+  pedidoId     Int
+  produtoId    Int
+  quantidade   Int
+  precoUnitario Decimal @db.Decimal(10, 2)
+
+  pedido  Pedido  @relation(fields: [pedidoId], references: [id])
+  produto Produto @relation(fields: [produtoId], references: [id])
+}
+
+// ─── PAGAMENTO ───────────────────────────────────────────
+model Pagamento {
+  id              Int      @id @default(autoincrement())
+  pedidoId        Int      @unique
+  metodo          String
+  status          String   @default("pendente")
+  transacaoId     String?
+  criadoEm        DateTime @default(now())
+  atualizadoEm    DateTime @updatedAt
+
+  pedido Pedido @relation(fields: [pedidoId], references: [id])
+}
+
+// ─── BANNER ──────────────────────────────────────────────
+model Banner {
+  id       Int    @id @default(autoincrement())
+  url      String
+  titulo   String?
+  subtitulo String?
+  ordem    Int    @default(0)
+  ativo    Boolean @default(true)
+}
+
+// ─── NEWSLETTER ──────────────────────────────────────────
+model Newsletter {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  criadoEm  DateTime @default(now())
+}
