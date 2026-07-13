@@ -1,26 +1,44 @@
 @import "tailwindcss";
+/* Aqui importo o Tailwind CSS pro projeto.
+É isso que faz todas as classes utilitárias como bg-white, text-lg e flex funcionarem. */
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Cores da Criatta */
+  --dourado: #B8963E;
+  --dourado-escuro: #8B6914;
+  --cinza: #7A8494;
+  --cinza-escuro: #3D4451;
+  --bege: #F5F0EA;
+  --bege-escuro: #EDE6DC;
+  --branco: #FFFFFF;
+  --preto: #1A1A1A;
 }
+/* Aqui defino as variáveis CSS globais com as cores da Criatta. Fazendo isso, em vez de
+repetir #B8963E em todo o projeto, uso var(--dourado) em qualquer lugar. Se precisar mudar
+uma cor, altero só aqui e reflete em todo o site. */
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  /* garante que o padding não aumente o tamanho dos elementos, facilitando o controle do
+  layout. */
 }
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+/* Reset padrão que removo as margens e paddings que os navegadores adicionam por padrão.*/
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--bege);
+  color: var(--preto);
+  font-family: 'Inter', sans-serif;
 }
+/* Aqui defino o estilo base do site — fundo bege, cor de texto escura e a fonte Inter em
+todas as páginas. */
+
+html {
+  scroll-behavior: smooth;
+}
+/* Aqui faço com que a página role suavemente ao clicar em links âncora, em vez de pular
+direto para a seção. */
+
+/* npm install @fontsource/inter - instalo a fonte Inter, que é una fonte moderna, clean e
+muito legível. Depois importo ela no globals.css pra poder usar em todo o site. */
