@@ -17,6 +17,9 @@ import Header from "@/components/layout/Header";
 // Importo o componente Header pra ele aparecer em todas as páginas da aplicação.
 // O @/ é o alias configurado no tsconfig que aponta pra pasta src/.
 
+import Footer from "@/components/layout/Footer";
+// Importo o componente Footer pra ele aparecer em todas as páginas da aplicação.
+
 export const metadata: Metadata = {
   title: "Criatta — Produtos Personalizados",
   description: "Loja de produtos personalizados. Pensou, criou, Criatta.",
@@ -34,6 +37,7 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col">
         <Header />
         {children}
+        <Footer />
       </body>
     </html>
   );
@@ -54,3 +58,4 @@ export default function RootLayout({
 // garantindo que o footer fique sempre no rodapé
 // <Header /> → renderizo o header antes do conteúdo de cada página
 // {children} → onde cada página é renderizada dentro do layout
+// <Footer /> → renderizo o footer depois do conteúdo de cada página
